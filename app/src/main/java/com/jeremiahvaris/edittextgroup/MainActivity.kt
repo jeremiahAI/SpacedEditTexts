@@ -70,55 +70,11 @@ class MainActivity : AppCompatActivity(), SpacedEditextCollector,
     }
 
     override fun setCursorIfFieldNotEmpty(index: Int) {
-        when (index) {
-            1 -> editText1.let {
-                if (it.text.isNotEmpty()) {
-                    it.requestFocus()
-                    it.setSelection(it.text.lastIndex)
-                } else setCursorAtEnd()
-            }
-            2 -> editText2.let {
-                if (it.text.isNotEmpty()) {
-                    it.requestFocus()
-                    it.setSelection(it.text.lastIndex)
-                } else setCursorAtEnd()
-            }
-            3 -> editText3.let {
-                if (it.text.isNotEmpty()) {
-                    it.requestFocus()
-                    it.setSelection(it.text.lastIndex)
-                } else setCursorAtEnd()
-            }
-            4 -> editText4.let {
-                if (it.text.isNotEmpty()) {
-                    it.requestFocus()
-                    it.setSelection(it.text.lastIndex)
-                } else setCursorAtEnd()
-            }
-            5 -> editText5.let {
-                if (it.text.isNotEmpty()) {
-                    it.requestFocus()
-                    it.setSelection(it.text.lastIndex)
-                } else setCursorAtEnd()
-            }
-            6 -> editText6.let {
-                if (it.text.isNotEmpty()) {
-                    it.requestFocus()
-                    it.setSelection(it.text.lastIndex)
-                } else setCursorAtEnd()
-            }
-            7 -> editText7.let {
-                if (it.text.isNotEmpty()) {
-                    it.requestFocus()
-                    it.setSelection(it.text.lastIndex)
-                } else setCursorAtEnd()
-            }
-            8 -> editText8.let {
-                if (it.text.isNotEmpty()) {
-                    it.requestFocus()
-                    it.setSelection(it.text.lastIndex)
-                } else setCursorAtEnd()
-            }
+        getEditTextByIndex(index)?.let {
+            if (it.text.isNotEmpty()) {
+                it.requestFocus()
+                it.setSelection(it.text.lastIndex)
+            } else setCursorAtEnd()
         }
     }
 
