@@ -49,16 +49,7 @@ class MainActivity : AppCompatActivity(), SpacedEditextCollector,
     override fun setCursorAtEnd() {
         val cardPan = getCardPan()
         cardPan.replace(" ", "")
-        when (cardPan.length) {
-            0 -> editText1.requestFocus()
-            1 -> editText2.requestFocus()
-            2 -> editText3.requestFocus()
-            3 -> editText4.requestFocus()
-            4 -> editText5.requestFocus()
-            5 -> editText6.requestFocus()
-            6 -> editText7.requestFocus()
-            else -> editText8.requestFocus()
-        }
+        getEditTextByIndex(cardPan.length+1)?.requestFocus()
     }
 
     override fun setCursorIfFieldNotEmpty(index: Int) {
@@ -101,16 +92,10 @@ class MainActivity : AppCompatActivity(), SpacedEditextCollector,
     }
 
     override fun setCursorOnNext(editText: EditText) {
-        if (canMoveCursorToNext)
-            when (editText.id) {
-                editText1.id -> editText2.requestFocus()
-                editText2.id -> editText3.requestFocus()
-                editText3.id -> editText4.requestFocus()
-                editText4.id -> editText5.requestFocus()
-                editText5.id -> editText6.requestFocus()
-                editText6.id -> editText7.requestFocus()
-                editText7.id -> editText8.requestFocus()
-            }
+        if (canMoveCursorToNext) {
+            val index = getEditTextIndex(editText)
+            getEditTextByIndex(index + 1)?.requestFocus()
+        }
     }
 
     override fun onDeleteText(editText: EditText) {
@@ -201,35 +186,20 @@ class MainActivity : AppCompatActivity(), SpacedEditextCollector,
     }
 
     fun setCursorOnPrevious(editText: EditText) {
-        when (editText.id) {
-            editText2.id -> setCursorIfFieldNotEmpty(1)
-            editText3.id -> setCursorIfFieldNotEmpty(2)
-            editText4.id -> editText3.requestFocus()
-            editText5.id -> editText4.requestFocus()
-            editText6.id -> editText5.requestFocus()
-            editText7.id -> editText6.requestFocus()
-            editText8.id -> editText7.requestFocus()
-        }
+        setCursorIfFieldNotEmpty(getEditTextIndex(editText)-1)
     }
 
     private fun getCardPan(): String {
-        return editText1.text.toString() + editText2.text.toString() + editText3.text.toString() + editText4.text.toString() + editText5.text.toString() + editText6.text.toString() + editText7.text.toString() + editText8.text.toString()
+        var value = ""
+        for (index in 1..numberOfEditTexts)
+            value +=getEditTextByIndex(index)?.text.toString()
+        return value
     }
 
     override fun onFocusChange(p0: View?, hasFocus: Boolean) {
         if (hasFocus) {
             canMoveCursorToNext = true
-            when (p0?.id) {
-                editText1.id -> this.setCursorIfFieldNotEmpty(1)
-                editText2.id -> this.setCursorIfFieldNotEmpty(2)
-                editText3.id -> this.setCursorIfFieldNotEmpty(3)
-                editText4.id -> this.setCursorIfFieldNotEmpty(4)
-                editText5.id -> this.setCursorIfFieldNotEmpty(5)
-                editText6.id -> this.setCursorIfFieldNotEmpty(6)
-                editText7.id -> this.setCursorIfFieldNotEmpty(7)
-                editText8.id -> this.setCursorIfFieldNotEmpty(8)
-
-            }
+            if (p0 is EditText) setCursorIfFieldNotEmpty(getEditTextIndex(p0))
         }
     }
 }
