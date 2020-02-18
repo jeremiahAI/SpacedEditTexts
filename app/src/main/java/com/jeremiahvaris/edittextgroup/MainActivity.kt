@@ -23,25 +23,17 @@ class MainActivity : AppCompatActivity(), SpacedEditextCollector,
     }
 
     private fun setTextWatchers() {
-        editText1.addTextChangedListener(CardLastEightTextWatcher(this, editText1))
-        editText2.addTextChangedListener(CardLastEightTextWatcher(this, editText2))
-        editText3.addTextChangedListener(CardLastEightTextWatcher(this, editText3))
-        editText4.addTextChangedListener(CardLastEightTextWatcher(this, editText4))
-        editText5.addTextChangedListener(CardLastEightTextWatcher(this, editText5))
-        editText6.addTextChangedListener(CardLastEightTextWatcher(this, editText6))
-        editText7.addTextChangedListener(CardLastEightTextWatcher(this, editText7))
-        editText8.addTextChangedListener(CardLastEightTextWatcher(this, editText8))
+        for (index in 1..numberOfEditTexts)
+            getEditTextByIndex(index)?.apply {
+                addTextChangedListener(
+                    CardLastEightTextWatcher(this@MainActivity,this)
+                )
+            }
     }
 
     private fun setOnFocusChangeListeners() {
-        editText1.onFocusChangeListener = this
-        editText2.onFocusChangeListener = this
-        editText3.onFocusChangeListener = this
-        editText4.onFocusChangeListener = this
-        editText5.onFocusChangeListener = this
-        editText6.onFocusChangeListener = this
-        editText7.onFocusChangeListener = this
-        editText8.onFocusChangeListener = this
+        for (index in 1..numberOfEditTexts)
+            getEditTextByIndex(index)?.onFocusChangeListener = this
     }
 
     override fun onClick(view: View?) {
