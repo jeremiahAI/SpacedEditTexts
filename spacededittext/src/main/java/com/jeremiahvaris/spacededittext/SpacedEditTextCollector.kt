@@ -3,7 +3,7 @@ package com.jeremiahvaris.spacededittext
 import android.view.View
 import android.widget.EditText
 
-interface SpacedEditextCollector:View.OnFocusChangeListener {
+interface SpacedEditTextCollector:View.OnFocusChangeListener {
 
     companion object{
         private val editTextsArrayList = ArrayList<EditText>()
@@ -25,8 +25,8 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
         for (index in 1..numberOfEditTexts)
             getEditTextByIndex(index)?.apply {
                 addTextChangedListener(
-                    Watcher(
-                        this@SpacedEditextCollector,
+                    TextWatcher(
+                        this@SpacedEditTextCollector,
                         this
                     )
                 )
@@ -49,9 +49,10 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
         setTextWatchers()
     }
 
-    fun registerEditText(editText: EditText){
-        editTextsArrayList.add(editText)}
-
+    fun registerEditTexts(vararg editTexts: EditText) {
+        editTextsArrayList.addAll(editTexts)
+        connectEditTexts()
+    }
     fun setCursorIfFieldNotEmpty(index: Int =-1) {
         getEditTextByIndex(index)?.let {
             if (it.text.isNotEmpty()) {

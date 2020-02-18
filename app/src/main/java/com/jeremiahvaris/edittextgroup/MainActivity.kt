@@ -3,11 +3,11 @@ package com.jeremiahvaris.edittextgroup
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.jeremiahvaris.spacededittext.SpacedEditTextCollector
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(),
-    com.jeremiahvaris.spacededittext.SpacedEditextCollector,
-     View.OnClickListener {
+class MainActivity : AppCompatActivity(), SpacedEditTextCollector,
+    View.OnClickListener {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,15 +19,16 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun registerEditTexts() {
-        registerEditText(editText1)
-        registerEditText(editText2)
-        registerEditText(editText3)
-        registerEditText(editText4)
-        registerEditText(editText5)
-        registerEditText(editText6)
-        registerEditText(editText7)
-        registerEditText(editText8)
-        connectEditTexts()
+        registerEditTexts(
+            editText1,
+            editText2,
+            editText3,
+            editText4,
+            editText5,
+            editText6,
+            editText7,
+            editText8
+        )
     }
 
     override fun onClick(view: View?) {
@@ -41,8 +42,6 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onFieldFullChanged(isFull: Boolean) {
-            continueButton.isEnabled = isFull
+        continueButton.isEnabled = isFull
     }
-
-
 }
