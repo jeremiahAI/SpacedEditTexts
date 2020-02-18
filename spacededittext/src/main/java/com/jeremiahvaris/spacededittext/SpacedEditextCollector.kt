@@ -25,7 +25,7 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
         for (index in 1..numberOfEditTexts)
             getEditTextByIndex(index)?.apply {
                 addTextChangedListener(
-                    com.jeremiahvaris.spacededittext.CardLastEightTextWatcher(
+                    Watcher(
                         this@SpacedEditextCollector,
                         this
                     )
@@ -39,9 +39,9 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
     }
 
      fun setCursorAtEnd() {
-        val cardPan = getCardPan()
-        cardPan.replace(" ", "")
-        getEditTextByIndex(cardPan.length+1)?.requestFocus()
+        val fullText = getFullText()
+        fullText.replace(" ", "")
+        getEditTextByIndex(fullText.length+1)?.requestFocus()
     }
 
     fun connectEditTexts(){
@@ -111,7 +111,7 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
     }
 
      fun afterTextChanged() {
-        if (getCardPan().length == numberOfEditTexts) onFieldFullChanged(true)
+        if (getFullText().length == numberOfEditTexts) onFieldFullChanged(true)
         else onFieldFullChanged(false)
     }
 
@@ -119,7 +119,7 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
         setCursorIfFieldNotEmpty(getEditTextIndex(editText)-1)
     }
 
-    fun getCardPan(): String {
+    fun getFullText(): String {
         var value = ""
         for (index in 1..numberOfEditTexts)
             value +=getEditTextByIndex(index)?.text.toString()
@@ -139,19 +139,19 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
      fun onFieldFullChanged(isFull: Boolean){}
 
     private fun onMidTextDeletion(index: Int) {
-        var cardPan = getCardPan()
-        cardPan = cardPan.replace(" ", "")
-        setCardPan(cardPan)
+        var fullText = getFullText()
+        fullText = fullText.replace(" ", "")
+        setFullText(fullText)
         setCursorIfFieldNotEmpty(index)
     }
 
-    private fun setCardPan(cardPan: String, startIndex: Int = 0) {
+    private fun setFullText(fullText: String, startIndex: Int = 0) {
         if (startIndex < numberOfEditTexts) {
             getEditTextByIndex(startIndex + 1)?.apply {
-                if (cardPan.length > startIndex) setText(cardPan[startIndex].toString())
+                if (fullText.length > startIndex) setText(fullText[startIndex].toString())
                 else setText("")
             }
-            setCardPan(cardPan, startIndex + 1)
+            setFullText(fullText, startIndex + 1)
         }
     }
 

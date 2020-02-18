@@ -4,7 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 
-class CardLastEightTextWatcher(
+class Watcher(
     private val spacedEditextCollector: SpacedEditextCollector,
     private val editText: EditText
 ) : TextWatcher {

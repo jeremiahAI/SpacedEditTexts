@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun showResult() {
-        resultTv.text = getCardPan()
+        resultTv.text = getFullText()
     }
 
     override fun onFieldFullChanged(isFull: Boolean) {
