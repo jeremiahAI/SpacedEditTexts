@@ -84,133 +84,28 @@ class MainActivity : AppCompatActivity(), SpacedEditextCollector,
         sequence: CharSequence,
         isRecursiveCall: Boolean
     ) {
-        if (sequence.isNotEmpty())
-            when (viewId) {
-                editText1.id -> {
-                    editText1.setText(sequence[0].toString())
-                    val newSequence = sequence.removeRange(0, 1)
-                    cursorIndex = newSequence.length + 1
-                    canMoveCursorToNext = false
-                    this.setCursorIfFieldNotEmpty(cursorIndex)
-                    if (newSequence.isNotEmpty()) onSingleEditTextOverflowed(
-                        editText2.id,
-                        newSequence,
-                        true
-                    )
-                }
-                editText2.id -> {
-                    val newSequence: String
-                    if (isRecursiveCall) {
-                        this.setCursorIfFieldNotEmpty(cursorIndex)
-                        newSequence = "" + sequence.removeRange(0, 1) + editText2.text
-                    } else {
-                        newSequence = "" + sequence.removeRange(0, 1)
-                        cursorIndex = newSequence.length + 2
-                        canMoveCursorToNext = false
-                    }
-                    editText2.setText(sequence[0].toString())
+        if (sequence.isNotEmpty()) {
+            val editText: EditText = findViewById(viewId)
+            val index = getEditTextIndex(editText)
+            val nextEditText = getEditTextByIndex(index+1)
+            val newSequence: String
 
-                    if (newSequence.isNotEmpty()) onSingleEditTextOverflowed(
-                        editText3.id,
-                        newSequence,
-                        true
-                    )
-                }
-                editText3.id -> {
-
-                    val newSequence: String
-                    if (isRecursiveCall) {
-                        this.setCursorIfFieldNotEmpty(cursorIndex)
-                        newSequence = "" + sequence.removeRange(0, 1) + editText3.text
-                    } else {
-                        newSequence = "" + sequence.removeRange(0, 1)
-                        cursorIndex = newSequence.length + 3
-                        canMoveCursorToNext = false
-                    }
-                    editText3.setText(sequence[0].toString())
-
-                    if (newSequence.isNotEmpty()) onSingleEditTextOverflowed(
-                        editText4.id,
-                        newSequence,
-                        true
-                    )
-                }
-                editText4.id -> {
-
-                    val newSequence: String
-                    if (isRecursiveCall) {
-                        this.setCursorIfFieldNotEmpty(cursorIndex)
-                        newSequence = "" + sequence.removeRange(0, 1) + editText4.text
-                    } else {
-                        newSequence = "" + sequence.removeRange(0, 1)
-                        cursorIndex = newSequence.length + 4
-                        canMoveCursorToNext = false
-                    }
-                    editText4.setText(sequence[0].toString())
-
-                    if (newSequence.isNotEmpty()) onSingleEditTextOverflowed(
-                        editText5.id,
-                        newSequence,
-                        true
-                    )
-                }
-                editText5.id -> {
-
-                    val newSequence: String
-                    if (isRecursiveCall) {
-                        this.setCursorIfFieldNotEmpty(cursorIndex)
-                        newSequence = "" + sequence.removeRange(0, 1) + editText5.text
-                    } else {
-                        newSequence = "" + sequence.removeRange(0, 1)
-                        cursorIndex = newSequence.length + 5
-                        canMoveCursorToNext = false
-                    }
-                    editText5.setText(sequence[0].toString())
-
-                    if (newSequence.isNotEmpty()) onSingleEditTextOverflowed(
-                        editText6.id,
-                        newSequence,
-                        true
-                    )
-                }
-                editText6.id -> {
-
-                    val newSequence: String
-                    if (isRecursiveCall) {
-                        this.setCursorIfFieldNotEmpty(cursorIndex)
-                        newSequence = "" + sequence.removeRange(0, 1) + editText6.text
-                    } else {
-                        newSequence = "" + sequence.removeRange(0, 1)
-                        cursorIndex = newSequence.length + 6
-                        canMoveCursorToNext = false
-                    }
-                    editText6.setText(sequence[0].toString())
-
-                    if (newSequence.isNotEmpty()) onSingleEditTextOverflowed(
-                        editText7.id,
-                        newSequence,
-                        true
-                    )
-                }
-                editText7.id -> {
-
-                    val newSequence: String = if (isRecursiveCall) {
-                        "" + sequence.removeRange(0, 1) + editText7.text
-                    } else {
-                        "" + sequence.removeRange(0, 1)
-                    }
-                    editText7.setText(sequence[0].toString())
-                    this.setCursorIfFieldNotEmpty(8)
-                    if (newSequence.isNotEmpty()) onSingleEditTextOverflowed(
-                        editText8.id,
-                        newSequence,
-                        true
-                    )
-                }
-                editText8.id -> {
-                    editText8.setText(sequence[0].toString())
-                }
+            if (isRecursiveCall) {
+                newSequence = "" + sequence.removeRange(0, 1) + editText.text
+            } else {
+                newSequence = "" + sequence.removeRange(0, 1)
+                cursorIndex = newSequence.length + index
+                canMoveCursorToNext = false
             }
+            setCursorIfFieldNotEmpty(cursorIndex)
+            editText.setText(sequence[0].toString())
+
+            if (newSequence.isNotEmpty())
+                nextEditText?.let {
+                    onSingleEditTextOverflowed(it.id, newSequence, true)
+                }
+        }
+
     }
 
     override fun setCursorOnNext(editText: EditText) {
