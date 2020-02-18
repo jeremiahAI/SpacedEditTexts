@@ -5,7 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), SpacedEditextCollector,
+class MainActivity : AppCompatActivity(),
+    com.jeremiahvaris.spacededittext.SpacedEditextCollector,
      View.OnClickListener {
 
 

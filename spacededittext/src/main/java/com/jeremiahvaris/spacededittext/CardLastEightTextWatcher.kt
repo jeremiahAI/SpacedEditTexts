@@ -1,4 +1,4 @@
-package com.jeremiahvaris.edittextgroup
+package com.jeremiahvaris.spacededittext
 
 import android.text.Editable
 import android.text.TextWatcher

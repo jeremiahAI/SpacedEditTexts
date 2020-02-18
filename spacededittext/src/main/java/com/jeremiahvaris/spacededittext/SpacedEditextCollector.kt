@@ -1,4 +1,4 @@
-package com.jeremiahvaris.edittextgroup
+package com.jeremiahvaris.spacededittext
 
 import android.view.View
 import android.widget.EditText
@@ -25,7 +25,10 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
         for (index in 1..numberOfEditTexts)
             getEditTextByIndex(index)?.apply {
                 addTextChangedListener(
-                    CardLastEightTextWatcher(this@SpacedEditextCollector,this)
+                    com.jeremiahvaris.spacededittext.CardLastEightTextWatcher(
+                        this@SpacedEditextCollector,
+                        this
+                    )
                 )
             }
     }
@@ -46,7 +49,8 @@ interface SpacedEditextCollector:View.OnFocusChangeListener {
         setTextWatchers()
     }
 
-    fun registerEditText(editText: EditText){editTextsArrayList.add(editText)}
+    fun registerEditText(editText: EditText){
+        editTextsArrayList.add(editText)}
 
     fun setCursorIfFieldNotEmpty(index: Int =-1) {
         getEditTextByIndex(index)?.let {
