@@ -50,6 +50,7 @@ interface SpacedEditTextCollector:View.OnFocusChangeListener {
     }
 
     fun registerEditTexts(vararg editTexts: EditText) {
+        editTextsArrayList.clear()
         editTextsArrayList.addAll(editTexts)
         connectEditTexts()
     }
