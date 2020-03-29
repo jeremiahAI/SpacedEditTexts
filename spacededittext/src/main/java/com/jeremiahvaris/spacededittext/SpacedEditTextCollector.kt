@@ -1,5 +1,6 @@
 package com.jeremiahvaris.spacededittext
 
+import android.text.Spanned
 import android.view.View
 import android.widget.EditText
 
@@ -41,7 +42,10 @@ interface SpacedEditTextCollector:View.OnFocusChangeListener {
      fun setCursorAtEnd() {
         val fullText = getFullText()
         fullText.replace(" ", "")
-        getEditTextByIndex(fullText.length+1)?.requestFocus()
+        getEditTextByIndex(fullText.length)?.apply{
+            requestFocus()
+            setSelection(text.length)
+        }
     }
 
     fun connectEditTexts(){
@@ -58,7 +62,7 @@ interface SpacedEditTextCollector:View.OnFocusChangeListener {
         getEditTextByIndex(index)?.let {
             if (it.text.isNotEmpty()) {
                 it.requestFocus()
-                it.setSelection(it.text.lastIndex)
+                it.setSelection(it.text.length)
             } else setCursorAtEnd()
         }
     }
@@ -112,10 +116,12 @@ interface SpacedEditTextCollector:View.OnFocusChangeListener {
 
     }
 
-     fun afterTextChanged() {
+     fun afterTextChanged(editText: EditText) {
         if (getFullText().length == numberOfEditTexts) onFieldFullChanged(true)
         else onFieldFullChanged(false)
-    }
+
+         editText.text.setSpan(TextSpanWatcher(editText), 0, 0, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+     }
 
     fun setCursorOnPrevious(editText: EditText) {
         setCursorIfFieldNotEmpty(getEditTextIndex(editText)-1)
