@@ -117,7 +117,7 @@ interface SpacedEditTextCollector:View.OnFocusChangeListener {
     }
 
      fun afterTextChanged(editText: EditText) {
-        if (getFullText().length == numberOfEditTexts) onFieldFullChanged(true)
+        if (getFullText().length > numberOfEditTexts-1) onFieldFullChanged(true)
         else onFieldFullChanged(false)
 
          editText.text.setSpan(TextSpanWatcher(editText), 0, 0, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -140,9 +140,6 @@ interface SpacedEditTextCollector:View.OnFocusChangeListener {
             if (p0 is EditText) setCursorIfFieldNotEmpty(getEditTextIndex(p0))
         }
     }
-
-
-
 
      fun onFieldFullChanged(isFull: Boolean){}
 
@@ -179,5 +176,23 @@ interface SpacedEditTextCollector:View.OnFocusChangeListener {
 
     private fun getEditTextIndex(editText: EditText): Int {
         return editTextsArrayList.indexOf(editText)+1
+    }
+
+    fun onTextChanged(
+        charSequence: CharSequence?,
+        start: Int,
+        before: Int,
+        count: Int,
+        formerText: String,
+        editText: EditText
+    ) {
+        charSequence?.let {
+            if (it.length > 1 || (start > 0 && it.isNotEmpty()))
+                onSingleEditTextOverflowed(editText.id, it)
+            else if (formerText.isEmpty() && charSequence.isNotEmpty()) // If it's not a deletion
+               setCursorOnNext(editText)
+            else if (formerText.isNotEmpty() && charSequence.isEmpty()) // If it's a deletion
+                onDeleteText(editText)
+        }
     }
 }

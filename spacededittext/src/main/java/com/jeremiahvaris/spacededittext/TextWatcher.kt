@@ -19,15 +19,14 @@ class TextWatcher(
     }
 
     override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-        charSequence?.let {
-            if (it.length > 1 || (start > 0 && it.isNotEmpty()))
-                spacedEditTextCollector.onSingleEditTextOverflowed(editText.id, it)
-            else if (formerText.isEmpty() && charSequence.isNotEmpty()) // If it's not a deletion
-                spacedEditTextCollector.setCursorOnNext(editText)
-            else if (formerText.isNotEmpty() && charSequence.isEmpty()) // If it's a deletion
-                spacedEditTextCollector.onDeleteText(editText)
-        }
-
+        spacedEditTextCollector.onTextChanged(
+            charSequence,
+            start,
+            before,
+            count,
+            formerText,
+            editText
+        )
     }
 
 }
