@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), SpacedEditTextCollector,
     }
 
     private fun showResult() {
-        resultTv.text = getFullText()
+        resultTv.text = collectTextFromEditTexts()
     }
 
     override fun onFieldFullChanged(isFull: Boolean) {
