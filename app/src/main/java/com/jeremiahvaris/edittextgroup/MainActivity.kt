@@ -23,11 +23,7 @@ class MainActivity : AppCompatActivity(), SpacedEditTextCollector,
             editText1,
             editText2,
             editText3,
-            editText4,
-            editText5,
-            editText6,
-            editText7,
-            editText8
+            editText4
         )
     }
 

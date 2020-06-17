@@ -108,7 +108,7 @@ interface SpacedEditTextCollector : View.OnFocusChangeListener {
 
     fun onDeleteText(editText: EditText) {
         val index = getEditTextIndex(editText)
-        if (index==8) setCursorOnPrevious(editText)
+        if (index== editTextsArrayList.size) setCursorOnPrevious(editText)
 
         if (index != numberOfEditTexts && index > -1) {
             val nextID = getEditTextID(index + 1)
