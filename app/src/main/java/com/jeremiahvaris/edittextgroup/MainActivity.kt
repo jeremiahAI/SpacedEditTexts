@@ -1,13 +1,11 @@
 package com.jeremiahvaris.edittextgroup
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.jeremiahvaris.spacededittext.SpacedEditTextCollector
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), SpacedEditTextCollector,
-    View.OnClickListener {
+class MainActivity : AppCompatActivity(), SpacedEditTextCollector{
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +13,7 @@ class MainActivity : AppCompatActivity(), SpacedEditTextCollector,
         setContentView(R.layout.activity_main)
 
         registerEditTexts()
-        continueButton.setOnClickListener(this)
+        continueButton.setOnClickListener{showResult()}
     }
 
     private fun registerEditTexts() {
@@ -25,12 +23,6 @@ class MainActivity : AppCompatActivity(), SpacedEditTextCollector,
             editText3,
             editText4
         )
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            continueButton.id -> showResult()
-        }
     }
 
     private fun showResult() {
